@@ -1,3 +1,8 @@
+'''
+
+Code adapted from:
+/samples/python2/lk_track.py
+'''
 
 # Python 2/3 compatibility
 from __future__ import print_function
@@ -51,6 +56,7 @@ class App:
                 cv.polylines(vis, [np.int32(tr) for tr in self.tracks], False, (0, 255, 0))
                 cv.putText(vis, 'track count: %d' % len(self.tracks),(20, 20),cv.FONT_HERSHEY_SIMPLEX, 1.5, (255,255,255), 1, cv.LINE_4)
 
+            # Pretend its the first frame again, find new features to track
             if self.frame_idx % self.detect_interval == 0:
                 mask = np.zeros_like(frame_gray)
                 mask[:] = 255
@@ -61,6 +67,9 @@ class App:
                 if p is not None:
                     for x, y in np.float32(p).reshape(-1, 2):
                         self.tracks.append([(x, y)])
+
+            cv2.cvCakuvrateCanera2
+
 
 
             self.frame_idx += 1
