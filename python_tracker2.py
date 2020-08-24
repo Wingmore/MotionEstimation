@@ -12,7 +12,7 @@ lk_params = dict( winSize  = (15, 15),
                   maxLevel = 2,
                   criteria = (cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT, 10, 0.03))
 
-feature_params = dict( maxCorners = 500,
+feature_params = dict( maxCorners = 300,
                        qualityLevel = 0.3,
                        minDistance = 7,
                        blockSize = 7 )
@@ -26,11 +26,12 @@ class App:
         self.frame_idx = 0
 
     def run(self):
+        i = 0;
         while True:
             _ret, frame = self.cam.read()
             frame_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
             vis = frame.copy()
-
+            cv.imwrite('kms.bmp', frame)
             if len(self.tracks) > 0:
                 img0, img1 = self.prev_gray, frame_gray
                 p0 = np.float32([tr[-1] for tr in self.tracks]).reshape(-1, 1, 2)
@@ -70,6 +71,10 @@ class App:
             ch = cv.waitKey(1)
             if ch == 27:
                 break
+            if cv.waitKey(33) == ord('a'):
+                print('writing to', i)
+                cv.imwrite('thing'+str(i)+'.bmp', frame)
+                i = i+1
 
 def main():
     import sys
